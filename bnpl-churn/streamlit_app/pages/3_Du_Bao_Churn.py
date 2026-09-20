@@ -89,9 +89,17 @@ with tab1:
         st.caption("Giá trị mặc định là trung vị toàn bộ dữ liệu — chỉnh để thử nghiệm.")
         values = {}
 
+        GENDER_DISPLAY = {"Male": "Nam", "Female": "Nữ", "Other": "Khác"}
+        GENDER_REVERSE = {v: k for k, v in GENDER_DISPLAY.items()}
+
         cols = st.columns(len(cat_cols))
         for i, c in enumerate(cat_cols):
-            values[c] = cols[i].selectbox(VN.get(c, c), cat_values[c])
+            if c == "gender":
+                display_options = [GENDER_DISPLAY.get(g, g) for g in cat_values[c]]
+                selected = cols[i].selectbox(VN.get(c, c), display_options)
+                values[c] = GENDER_REVERSE.get(selected, selected)
+            else:
+                values[c] = cols[i].selectbox(VN.get(c, c), cat_values[c])
 
         for group, fields in GROUPS.items():
             fields = [f for f in fields if f in num_cols]
