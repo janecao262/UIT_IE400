@@ -12,6 +12,7 @@ DATA_DIR = ROOT / "data"
 MODELS_DIR = ROOT / "models"
 REPORTS_DIR = ROOT / "reports"
 
+
 # Bảng màu tiết chế: 1 màu chủ đạo + 1 màu nhấn + xám trung tính
 ACCENT = "#2F5D8A"      # xanh đậm — phần lớn biểu đồ
 ACCENT_2 = "#C0504D"    # đỏ gạch — chỉ dùng cho churn / cảnh báo
@@ -59,6 +60,16 @@ def load_transactions():
 
 @st.cache_data(show_spinner=False)
 def load_customer_features():
+    """Bảng đặc trưng TOÀN KỲ (T11) — 43 cột, có lifecycle_segment/churn_label.
+    Chỉ dùng cho EDA ở Trang 1-2 (mục 3.3 báo cáo). KHÔNG dùng để huấn luyện/dự báo."""
+    p = DATA_DIR / "bnpl_customer_features.csv"
+    return pd.read_csv(p) if p.exists() else None
+
+
+@st.cache_data(show_spinner=False)
+def load_model_features():
+    """Bảng đặc trưng tính tại mốc T_ref (T14) — 27 đặc trưng + churn.
+    Dùng cho Trang 3 (file mẫu chấm điểm hàng loạt) và huấn luyện (mục 3.4 báo cáo)."""
     p = DATA_DIR / "bnpl_model_features.csv"
     return pd.read_csv(p) if p.exists() else None
 
@@ -69,9 +80,6 @@ def load_report(name: str):
     return pd.read_csv(p, index_col=0) if p.exists() else None
 
 
-# Tùy chọn dự phòng: nếu file .pkl không có trong repo (ví dụ bị .gitignore), điền link Google Drive
-# public dạng https://drive.google.com/uc?export=download&id=<FILE_ID>, hoặc đặt trong
-# .streamlit/secrets.toml với khóa GDRIVE_MODEL_URL. Để trống nếu đã commit models/ vào GitHub.
 GDRIVE_MODEL_URL = ""
 
 MODEL_CANDIDATES = [
@@ -126,7 +134,7 @@ def load_artifact():
     if not url:
         try:
             url = st.secrets.get("GDRIVE_MODEL_URL", "")
-        except Exception:      # không có secrets.toml → bỏ qua
+        except Exception:      
             url = ""
     if url:
         dest = MODELS_DIR / "churn_model_final.pkl"
