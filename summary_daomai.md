@@ -1,4 +1,4 @@
-# TỔNG HỢP NỘI DUNG TÀI LIỆU NGHIÊN CỨU ChUYÊN ĐỀ TỐT NGHIỆP
+# TỔNG HỢP NỘI DUNG TÀI LIỆU NGHIÊN CỨU CHUYÊN ĐỀ TỐT NGHIỆP
 
 
 ---
