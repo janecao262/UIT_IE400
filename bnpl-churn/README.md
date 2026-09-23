@@ -43,7 +43,7 @@ Repo đã kèm sẵn model + dữ liệu nên chạy được ngay, không cần
 - `bnpl_customer_features.csv` (T11, toàn kỳ 2024): dùng cho **EDA** (Trang 1, 2 của app; mục 3.3 báo cáo). **Không** dùng trực tiếp để huấn luyện - chứa rò rỉ nhãn vì tính trên cùng cửa sổ dùng để xác định churn (xem mục 3.2.2).
 - `bnpl_model_features.csv` (T14, cắt tại mốc T_ref): dùng để **huấn luyện & dự báo** (Trang 3 của app; mục 3.4 báo cáo).
 
-##  GitHub &  Deploy (T19)
+##  GitHub &  Deploy
 
 ```bash
 cd bnpl-churn
